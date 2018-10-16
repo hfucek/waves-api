@@ -43,7 +43,27 @@ class TransactionWrapper {
     }
 
 }
+export const createSignedTransaction = (type: string, data,privateKey): Promise<ITransactionWrapper> => {
+    const name = capitalize(type);
+    const preRemap = txHelpers['pre' + name];
+    const postRemap = txHelpers['post' + name];
 
+    if (!preRemap || !postRemap || !TX_TYPE_MAP[type]) {
+        throw new Error(`Unknown transaction type: ${type}`);
+    }
+
+    const proofs = data.proofs || [];
+//console.log(data);
+    return preRemap(data).then((validatedData) => {
+      //console.log('validated:',validatedData);
+        const signatureGenerator = new TX_TYPE_MAP[type](validatedData);
+      //  console.log(signatureGenerator)
+        let tw=new TransactionWrapper(signatureGenerator, validatedData, postRemap, proofs);
+    //    console.log(tw)
+        tw.addProof(privateKey);
+        return tw.getJSON();
+    });
+};
 
 export const createTransaction = (type: string, data): Promise<ITransactionWrapper> => {
     const name = capitalize(type);

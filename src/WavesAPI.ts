@@ -13,6 +13,7 @@ import { INodeAPI } from './api/node/index';
 
 import * as MatcherAPI from './api/matcher/index';
 import { IMatcherAPI } from './api/matcher/index';
+import * as transaction from './utils/transactions';
 
 import * as constants from './constants';
 import config from './config';
@@ -44,6 +45,7 @@ class WavesAPI implements IWavesAPI {
     public readonly crypto = utils.crypto;
     public readonly request = request;
     public readonly tools = tools;
+    public readonly transactions = transaction;
 
     public readonly API = {
         Node: NodeAPI,
