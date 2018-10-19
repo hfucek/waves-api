@@ -51,6 +51,7 @@
     "ts-utils": "6.0.4"
   },
   "scripts": {
+    "prepare": "npm run build",
     "_build-partial": "node_modules/.bin/browserify raw/src/WavesAPI.js --node -s WavesAPI -u parse-json-bignumber -u bignumber.js -u crypto -u node-fetch -u ts-utils -u @waves/signature-generator -u ts-api-validator > ./dist/waves-api.partial.js",
     "_build-full": "node_modules/.bin/browserify raw/src/WavesAPI.js --node -s WavesAPI -u crypto -u node-fetch > ./dist/waves-api.js",
     "build": "npm run compile && mkdir -p dist && npm run _build-partial && npm run _build-full && npm run uglifyjs && cp ./interfaces.d.ts ./raw/interfaces.d.ts",
