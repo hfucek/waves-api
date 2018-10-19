@@ -101,11 +101,14 @@ export function wrapTxRequest(SignatureGenerator: ISignatureGeneratorConstructor
             const transaction: ISignatureGenerator = new SignatureGenerator(validatedData);
 
             return transaction.getSignature(keyPair.privateKey)
-                .then((signature) => postRemap({
+                .then((signature) => {
+
+                  return postRemap({
                     ...validatedData,
                     ...(withProofs ? { proofs: [signature] } : { signature })
-                }))
+                })})
                 .then((tx) => {
+
                     return callback({
                         ...POST_TEMPLATE,
                         body: JSON.stringify(tx)

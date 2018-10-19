@@ -16,6 +16,10 @@ export default {
 
     balanceDetails(address: string) {
         return fetch(`/addresses/balance/details/${address}`);
+    },
+
+    scriptInfo(address: string) {
+        return fetch(`/addresses/scriptInfo/${address}`);
     }
 
 };
